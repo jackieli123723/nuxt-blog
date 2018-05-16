@@ -1,0 +1,20 @@
+User-agent: *
+Disallow: 
+Disallow: /bin/
+Disallow: /proxy
+Sitemap: https://surmon.me/sitemap.xml
+Sitemap: https://surmon.me/sitemap
+
+或者
+
+User-agent: *
+Allow: /
+Sitemap: ${config.siteUrl}/sitemap.xml
+User-agent: YisouSpider
+Disallow: /
+User-agent: EasouSpider
+Disallow: /
+User-agent: EtaoSpider
+Disallow: /
+User-agent: MJ12bot
+Disallow: /`

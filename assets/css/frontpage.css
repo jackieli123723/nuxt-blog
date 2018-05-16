@@ -1,0 +1,69 @@
+body{
+  font-family: 'Roboto', sans-serif;
+}
+#header-area{
+  /*height: 486px;*/
+  height: 120px;
+}
+#header-area.with-subscribe{
+  height: 486px;
+}
+.subscribe-area{
+  display: none;
+}
+#header-area.with-subscribe .subscribe-area{
+  display: block;
+}
+#blog-tabs li{
+  display: inline-block;
+  margin-right: 40px;
+}
+#blog-tabs label{
+  padding: 0 4px;
+  margin-right: 6.5px;
+  cursor: pointer;
+}
+#blog-tabs span{
+  padding: 0 10px 5px;
+}
+.active-tab span{
+  border-bottom: 2px solid #ff0000;
+}
+#blog-tabs input{
+  display: none;
+}
+@media(max-width: 1319px){
+  /*#header-area{
+    height: 118px;
+  }
+  .subscribe-area{
+    display: none;уточнить
+  }*/
+  #blog-tabs li{
+    margin-right: 0;
+  } 
+  #blog-tabs label{
+    margin-right: 0;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+} 
+@media(max-width: 1023px){
+  #blog-nav{
+    height: auto;
+    margin-bottom: 34px;
+  }
+  #blog-nav{
+    /*height: 87px;*/
+  }
+  #blog-nav label{
+    padding: 0;
+  }
+
+} 
+@media(max-width: 639px){
+
+} 
+.hidden-link{
+  cursor: pointer;
+}
