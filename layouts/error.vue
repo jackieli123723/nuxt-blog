@@ -5,7 +5,7 @@
       {{ error.statusCode }}
     </h1>
     <h2 class="info">
-      {{ error.message }}
+      页面被UFO抓跑了
     </h2>
     <nuxt-link to="/">首页</nuxt-link>
   </div>
@@ -32,11 +32,11 @@ export default {
 }
 a {
   margin-top: 50px;
-  border: 1px solid #3084bb;
-  color: #3084bb;
+  border: 1px solid #f00;
+  color: #f00;
   font-size: 16px;
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px 30px;
   border-radius: 4px;
 }
 </style>

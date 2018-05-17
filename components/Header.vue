@@ -1,5 +1,5 @@
 <template>
-  <div id="header" class="container-fluid" style="background:#000">
+  <div id="header" class="container-fluid">
       <div class="container">
         <div class="row">
           <header>
