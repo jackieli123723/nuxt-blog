@@ -400,7 +400,7 @@ input:hover::placeholder{
   font-size: 16px;
 }
 .disc-separ{
-  padding: 0 14px;
+  padding: 0 5px;
 }
 .post-social{
   display: inline-block;
@@ -626,10 +626,23 @@ input:hover::placeholder{
 .post_rating_block{
   margin-top: 20px;
 }
+.post-descr{
+  position: relative;
+}
 .post-rating{
   display: inline-block;
   vertical-align: middle; 
+      position: absolute;
+    top:6px;
+    right: 0;
 }
+
+@media (max-width: 375px) {
+    .post-rating {
+        display: none
+    }
+}
+
 
 .post-rating-image{
   cursor: pointer;
@@ -683,4 +696,18 @@ input:hover::placeholder{
 }
 .post_rating_block .post-rating-image:hover ~ .post-rating-image {
   /*background-image: url(../img/star_empty_white.svg);*/
+}
+
+
+.st0 {
+        fill-rule: evenodd;
+        clip-rule: evenodd;
+        fill: #282828
+}
+
+.st1 {
+        fill: none;
+        stroke: #282828;
+        stroke-width: 2.5;
+        stroke-miterlimit: 10
 }

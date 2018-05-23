@@ -25,9 +25,10 @@ body{
 }
 #blog-tabs span{
   padding: 0 10px 5px;
+   cursor: pointer;
 }
 .active-tab span{
-  border-bottom: 2px solid #ff0000;
+  color: #f00;
 }
 #blog-tabs input{
   display: none;

@@ -87,3 +87,5 @@ export function isLogin() {
 export function setToken(tokenValue) {
   setCookieInClient('token', tokenValue, 60*24*7)
 }
+
+

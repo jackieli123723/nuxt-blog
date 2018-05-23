@@ -1,4 +1,5 @@
 <template>
+ <!--  滚动添加 active-work-menu -->
   <div id="header" class="container-fluid">
       <div class="container">
         <div class="row">
@@ -23,7 +24,7 @@
               <div class="social">
                 <ul>
                   <li>
-                    <a href="https://dribbble.com/Fireart-d" class="dribbble" target="_blank">
+                    <a class="dribbble" target="_blank">
                       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 25 25" style="enable-background:new 0 0 25 25;" xml:space="preserve">
                         <g id="XMLID_2_">
                           <path id="Dribbble" class="st0" d="M12.5,0.5c-6.6,0-12,5.4-12,12c0,6.6,5.4,12,12,12s12-5.4,12-12C24.5,5.9,19.1,0.5,12.5,0.5z
@@ -39,7 +40,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.behance.net/fireart" class="behance" target="_blank">
+                    <a  class="behance" target="_blank">
                       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 25 25" style="enable-background:new 0 0 25 25;" xml:space="preserve">
                         <g id="XMLID_9_">
                           <path id="Behance" class="st0" d="M22.2,7.1h-6V5.7h6L22.2,7.1C22.2,7.1,22.2,7.1,22.2,7.1z M12.2,13.3c0.4,0.6,0.6,1.3,0.6,2.2
@@ -70,6 +71,7 @@
             </div>
             <a class="ui-logo" href="/" data-link="home">
               <i class="ui-logo__icon">
+               <!--  <img src="http://demo.lilidong.cn/img/o2logo.png" > -->
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 61 132.3" style="enable-background:new 0 0 61 132.3;" xml:space="preserve">
                   <path id="XMLID_7_" class="st1" d="M0,24v14.5v8.8v1.3c0,4.8,5,7.3,8,7.3v-8.6V33.5C8,26.4,3,24,0,24z"></path>
                   <path id="XMLID_6_" class="st2" d="M31-0.1v9.8v4.1V15c0,4.8-5,7.3-8,7.3v-3.8V9.4C23,2.2,28-0.1,31-0.1z"></path>

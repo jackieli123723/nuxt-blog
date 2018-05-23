@@ -2,10 +2,9 @@
   <div class="default-layout">
     <header-nav/>
     <header-area/>
-    <div class="b">
+    <div class="box">
       <nuxt/>
     </div>
-   
   </div>
 </template>
 
