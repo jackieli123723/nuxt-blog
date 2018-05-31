@@ -1,7 +1,16 @@
 
 export function formatDate(timestamp) {
-  let date = new Date(timestamp);
-  return date.getYear() + "-" + date.getMonth() + 1 + "-" + date.getDate() + "   " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      if (timestamp == 0) return ''
+      let date = new Date(Number(timestamp))
+      let year = date.getFullYear()
+      let month = date.getMonth()+1
+      let day = date.getDate()
+      let hour = date.getHours()
+      let minute = date.getMinutes()
+      function filter(num) {
+          return num > 10 ? num : '0' + num
+      }
+      return filter(year)+'.'+filter(month)+'.'+filter(day)+' '+filter(hour)+':'+filter(minute);
 }
 
 export function postToSQLUpdate(object) {

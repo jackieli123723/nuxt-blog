@@ -5,7 +5,7 @@
           <div id="blog-tabs" class="f-c v-a-c">
             <form action="/search" type="GET" id="form-cat">
               <ul class="v-a-b">
-                <li class="" :class="{'active-tab':typeId == tab.id}" v-for="(tab,index) in tabs"  @click="changeType(tab.id)" >
+                <li class="" :class="{'active-tab':typeId == tab.id}" v-for="(tab,index) in tabs"  @click="emitTypeChanged(tab.id)" >
                   <span>{{tab.name}}</span>
                 </li>
               </ul>
@@ -13,7 +13,7 @@
           </div>
           <div id="search" class="v-a-c">
               <div class="v-a-b">
-                <input type="text" name="s" placeholder="搜索">
+                <input type="text" name="s" v-model="title"  @input="emitTitleChanged" placeholder="搜索">
                 <div class="search-icon">
                   <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 25 25" style="enable-background:new 0 0 25 25;" xml:space="preserve">
                     <path id="XMLID_3_" class="st0" d="M16.5,18.2c-0.5-0.5-0.5-1.3,0-1.8c0.5-0.5,1.3-0.5,1.8,0l5.3,5.3c0.5,0.5,0.5,1.3,0,1.8
@@ -27,26 +27,30 @@
         </div>
         <div id="content-area">
           <div id="ajax">
-            <div class="posts f-c">
-              <div class="post-area">
+
+            <div class="posts f-c" >
+
+              <div class="post-area" v-for="(article,index) in articleLists">
                 <div class="post">
                   <div class="post-thumbnail">
-                   <a href="/article/3333">
-                      <img width="410" height="231" src="~assets/img/apple-device-computer-dark-986812-410x231.jpg" >
-                    </a>
+                      <nuxt-link :to="'/article/' + article._id ">
+                          <img width="410" height="231" :src=article.placeholder_img  >
+                      </nuxt-link>
                   </div>
                   <div class="post-footer">
                     <div class="post-cat">
                       <span class="hidden-link">
-                        web前端
+                        {{article.type | formatType}}
                       </span>
                     </div>
                     <div class="post-title">
-                      <a href="/article/3333">如何选择最佳网站配色方案...</a>
+                      <nuxt-link :to="'/article/' + article._id ">
+                         {{article.title}}
+                      </nuxt-link>
                     </div>
                     <div class="post-descr">
                       <div class="post-date">
-                        2018年5月1日
+                      {{article.creat_date | formatDate}}
                       </div>
                       <span class="disc-separ">
                         ·
@@ -54,7 +58,7 @@
 
                       <div class="number-view">
                          <span class="view-icon"></span>
-                         <span class="num">9999</span> 
+                         <span class="num">{{article.comment_count}}</span> 
                       </div>
 
                        <span class="disc-separ">
@@ -63,7 +67,7 @@
                     
                       <div class="number-view">
                          <span class="view-icon mes"></span>
-                         <span class="num">9999</span> 
+                         <span class="num">{{article.pv}}</span> 
                       </div>
                      
 
@@ -83,7 +87,11 @@
                   </div>
                 </div>
               </div>
+
              </div>
+
+
+
             <div class="posts-pagination">
               <ul>
                 <li><a class="prev page-numbers" href="?page=2">Previous</a></li> 
@@ -133,10 +141,21 @@
 </template>
 
 <script>
+ // import {formatDate} from  '../utils/utils'
   export default {
-    data(){
+   props: {
+    //总数据
+    articleLists:{
+       type: Array,
+       default: Array
+    }
+  },
+  computed:{
+  },
+  data(){
        return {
         typeId:0, 
+        title:"",
         tabs:[
           {
             id:0,
@@ -170,8 +189,12 @@
        }
     },
     methods:{
-      changeType(typeId){
-         this.typeId = typeId
+      emitTitleChanged(e){
+        this.$emit('inputChanged', this.title)
+      },
+      emitTypeChanged(typeId){
+        this.typeId = typeId
+        this.$emit('typeChanged', typeId);
       }
     }
   }

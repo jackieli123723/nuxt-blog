@@ -1,18 +1,20 @@
 <template>
-  <div id="content" class="container-fluid">
-<!--     大图标题 -->
-  <div id="header-area" class="container-fluid with-subscribe">
+  <!-- 注意这里通过mongodb的_id来判断不存在的页面404 否则会报错 -->
+  <div id="content" class="container-fluid" v-if="articleDetail && articleDetail._id !== ''">
+   <!--大图标题 -->
+  <div id="header-area" class="container-fluid with-subscribe" >
     <div class="placeholder">
       <!--  切换手机模式添加class="rotate" -->
-      <img :class="{'rotate':isMobile == true}" src="~assets/img/background-beverage-breakfast-414645-1920x1281.jpg"  >
+      <!-- <img :class="{'rotate':isMobile == true}" src="~assets/img/background-beverage-breakfast-414645-1920x1281.jpg"  >  -->
+      <img :class="{'rotate':isMobile == true}" :src=articleDetail.background_img  >
     </div>
    <div class="container">
       <div class="description-area">
-      <div class="date">2018年5月1日</div>
-      <h1 class="title">How to Create a Successful Web Design Mockup</h1>
+      <div class="date">{{articleDetail.creat_date | formatDate}}</div>
+      <h1 class="title">{{articleDetail.title}}</h1>
       <div class="tags">
       <ul>
-        <li><a href="">web前端</a></li>
+        <li><a href="">{{articleDetail.type | formatType}}</a></li>
       </ul>
       </div>
       </div>
@@ -20,83 +22,140 @@
   </div>
   <div class="container">
     <div id="content-area">
-      <div class="post-content">
-        <p>
-          Working on a web design mockup is about planning every idea beforehand.
-          The process includes some essential steps that include deciding on the
-          wireframe necessary to arrange the content properly by choosing graphic
-          software for building engaging visual effects. The next stage is to focus
-          on the organization of the web page mockup, with the mission here to identify
-          the core layout elements. As soon as these stages are complete, it’s time
-          to start building a full-scale website design mockup from scratch, adding
-          all the necessary features to help you create the most catchy designs.
-        </p>
-        <p>
-          Why is it necessary to create a mockup website? It provides a clear vision
-          of how your future site and its pages will look, and you will have the
-          opportunity to customize your resource before you actually start coding.
-          Many amateur designers are confident that mockups do not actually differ
-          from one site to another, but they are wrong to consider all mockups as
-          the same.
-          <br>
-          Working with different softwares, tools, fidelity, and platforms may eventually
-          lead to different results. For this reason, it is vital to have a clear
-          understanding of your website objectives, and a basic idea of how to create
-          a website mockup. You might need a powerful tool that will support and
-          maintain all phases of the process.
-        </p>
-        <p>
-          Whether you choose a graphic editor or decide to code it yourself, you
-          will need to follow the essential guide that explains how to create a mockup
-          of a website.
-        </p>
-        <p>
-          &nbsp;
-        </p>
-        <h2>
-          Tip #1 – Start With Brainstorming
-        </h2>
-        <p>
-          <img class="alignnone wp-image-1248 size-medium_single_image" src="https://fireart.studio/blog/wp-content/uploads/2018/04/image19-1-850x562.jpg.pagespeed.ce.M5Hpv47urh.jpg"
-          alt="" width="850" height="562" srcset="https://fireart.studio/blog/wp-content/uploads/2018/04/image19-1-850x562.jpg 850w, https://fireart.studio/blog/wp-content/uploads/2018/04/image19-1-410x271.jpg 410w, https://fireart.studio/blog/wp-content/uploads/2018/04/image19-1-768x508.jpg 768w, https://fireart.studio/blog/wp-content/uploads/2018/04/image19-1-1024x677.jpg 1024w"
-          sizes="(max-width: 850px) 100vw, 850px">
-        </p>
-        <p>
-          In-depth research comes first, regardless of whether you plan to create
-          a complete website or simply a mockup. You need to gather as much information
-          about your future resource as possible. This is where you need to define
-          the key goals of your project. Set clear tasks that your website is supposed
-          to accomplish in future. Get the clear vision of your buyer persona or
-          target audience in order to choose the proper content. Make sure you consider
-          all of the following issues:
-        </p>
-      
-     
+      <div class="post-content" v-html="articleDetail.content"  v-highlight>
+        
       </div>
     </div>
   </div>
    <comment-box />
    <footer-nav/>
 </div>
+<div id="content" class="container-fluid" v-else>
+   404
+</div>
 </template>
 
 <script>
+import Vue from 'vue'
+import VueHighlightJS from 'vue-highlight.js'
+import 'highlight.js/styles/github.css'
+
+Vue.use(VueHighlightJS)
+
+  //html富文本 code高亮 
+  Vue.directive('highlight',function (el) {
+    let blocks = el.querySelectorAll('pre code');
+    blocks.forEach((block)=>{
+      hljs.highlightBlock(block)
+    })
+  })
+
+
   import { mapGetters } from 'vuex'
   import {seo} from '../../utils/utils'
+  import { Service } from '~/plugins/axios'
   export default {
       components: {
         FooterNav: () => import('~/components/Footer'),
         CommentBox: () => import('~/components/Comment')
       },
+      asyncData ({route,error},callback) {
+        let params = {
+            articleId:route.params.id 
+        }
+        Service.post('article/detail',params)
+        .then((res) => {
+          //404
+          if(!res){
+            return error({
+              statusCode: 404,
+              message: "对不起，没有找到这个页面"
+            });
+          }
+          callback(null, { articleDetail: res.data.data })
+        })
+         .catch((e) => {
+            return error({
+              statusCode: 500,
+              message: e.message
+            });
+        })
+      },
+      created () {
+          //这里调用没挂在window.__NUXT__
+          //不能调用这个否者的话会覆盖tab切换数据
+          this.GetArticleById()
+      },
       mounted(){
         //直接将SEO脚本放在页面会被当成文本解析，所以将方法提取出来，放到mounted hook里面执行
-        seo()
+       // seo()
+      },
+      data(){
+         return{
+          articleDetail:{
+              type: null,
+              title: null,
+              creat_date:null,
+              placeholder_img: null,
+              background_img:null,
+              content: null,
+              _id:''
+          }
+         }
+      },
+      head() {
+          return {
+              //这里一定要判断否则会出现 this.articleDetail.title 不存在
+                title: (this.articleDetail && this.articleDetail._id !== '') ? this.articleDetail.title : '文章被ufo抓跑了！！',
+                meta: [{
+                hid: "description",
+                name: "description",
+                content: (this.articleDetail && this.articleDetail._id !== '') ? this.description : '文章被ufo抓跑了！！'
+              }],
+          }
       },
       computed: {
           isMobile() {
             return this.$store.state.option.isMobile
+          },
+          //计算meta描述语言关键 核心seo
+          description() {
+            return this.articleDetail.content
+              .substring(0, 150)
+              
+              //安全字符
+              .replace(/&amp;/g, "&")
+              .replace(/&lt;/g, "<")
+              .replace(/&gt;/g, ">")
+              .replace(/&quot;/g, '"')
+              .replace(/&#39;/g, "'")
+              .replace(/&nbsp;/g, " ")
+              //html标签元素
+              .replace(/<\/?[^>]*>/g,'') 
+              //换行
+              .replace(/\r\n/g, "")
+              .replace(/\n/g, "")
+              .replace(/#+/g, ",") + "...";
           }
+      },
+     methods: {
+      GetArticleById() {
+        let params = {
+          articleId:this.$route.params.id 
+        }
+         Service.post('article/detail',params)
+          .then(res => {
+    
+            const success = res.data && res.data.code === 200
+            if (success) {
+                 // this.articleDetail = res.data.data
+            }
+          }, err => {
+             console.log(err)
+          })
       }
+
+    }
 
   }
 </script>

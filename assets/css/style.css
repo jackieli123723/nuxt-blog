@@ -385,8 +385,12 @@ input:hover::placeholder{
   color: #ff0000;
 }
 .post-title{
-  /*min-height: 58px;*/
-  min-height: 65px;
+overflow:hidden; 
+text-overflow:ellipsis;
+display:-webkit-box; 
+-webkit-box-orient:vertical;
+-webkit-line-clamp:2; 
+  height: 65px;
   margin-bottom: 14px;
   font-size: 24px;
   font-weight: 500;

@@ -12,9 +12,13 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "express": "^4.16.3",
+    "highlight.js": "^9.12.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
-    "nuxt": "^1.4.0"
+    "nuxt": "^1.4.0",
+    "qs": "^6.5.2",
+    "vue-highlight.js": "^2.2.0"
   }
 }

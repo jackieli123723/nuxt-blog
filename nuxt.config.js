@@ -1,6 +1,8 @@
 module.exports = {
   head: {
     title: '西门互联nuxt博客',
+    /*下面这个是title模板主要应用详情的标题例如新闻标题*/
+    titleTemplate: '西门互联nuxt博客 - %s', 
     meta: [
       { charset: 'utf-8' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' },
@@ -41,8 +43,22 @@ module.exports = {
       { src: '~assets/css/reset.css', lang: 'css'},
       { src: '~assets/css/new-style.css', lang: 'css'},
       { src: '~assets/css/style.css', lang: 'css'},
-      { src: '~assets/css/frontpage.css', lang: 'css'}
-  ]
+      { src: '~assets/css/frontpage.css', lang: 'css'},
+      { src: '~assets/css/github.min.css', lang: 'css'}
+  ],
+  cache: {
+        max: 1000,
+        maxAge: 900000
+  },
+  plugins: [
+    '~/plugins/axios.js'
+  ],
+  build: {
+    vendor: [
+      '~/plugins/axios.js'
+    ],
+    extractCSS: true,
+  }
 };
 
 
