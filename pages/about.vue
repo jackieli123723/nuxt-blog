@@ -40,12 +40,21 @@
           http://demo.lilidong.cn
         </a>
       </p>
+    
       <p class="ct-author-page-url">
         <strong>
           Website:
         </strong>
         <a href="http://lilidong.cn" target="_blank">
           http://lilidong.cn
+        </a>
+      </p>
+      <p class="ct-author-page-url">
+        <strong>
+          Website-https:
+        </strong>
+        <a href="https://wordpress.lilidong.cn" target="_blank">
+           https://wordpress.lilidong.cn
         </a>
       </p>
 
@@ -60,7 +69,12 @@
   export default {
     components: {
       FooterNav: () => import('~/components/Footer')
-    }
+    },
+    head () {
+      return {
+        title: "关于"
+      }
+    },
   }
 </script>
 

@@ -1,551 +1,108 @@
 <template>
   <div id="content" >
    
-   <div class="post-block archive" style="opacity: 1; display: block;">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+       <div class="post-block archive" v-if="archive && archive.length > 0">
 
-      <span class="archive-page-counter">
-        
-        
-         
-          
-        非常好! 目前共计 199 篇日志。 继续努力。
-      </span>
+          <div id="posts" class="posts-collapse">
+            <span class="archive-move-on"></span>
+            <span class="archive-page-counter">
+              非常好! 目前共计 <i style="color:#f00">{{totalRecords}}</i> 篇文章。 继续努力。
+            </span>
 
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title" style="opacity: 1; display: block; transform: translateX(0px);">
-            <h1 class="archive-year" id="archive-year-2018" style="opacity: 1; display: block; transform: translateX(0px);">2018</h1>
+            <div class="collection-title">
+              <h1 class="archive-year">2018</h1>
+            </div>
+              
+            <article class="post post-type-normal" v-for="(article,index) in archive" >
+              <header class="post-header">
+                <h2 class="post-title">
+                       <nuxt-link :to="'/article/' + article._id " >
+                         <span>{{article.title}}</span>
+                      </nuxt-link>
+                </h2>
+                <div class="post-meta">
+                  <time class="post-time" >
+                    {{article.creat_date | formatDate}}
+                  </time>
+                </div>
+              </header>
+            </article>
           </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/23259.html" itemprop="url">
-              
-                <span itemprop="name">初识 Kata Containers</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-18T09:00:00+08:00" content="2018-05-18">
-          05-18
-        </time>
       </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/61543.html" itemprop="url">
-              
-                <span itemprop="name">Socat 入门教程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-17T09:00:00+08:00" content="2018-05-17">
-          05-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/5128.html" itemprop="url">
-              
-                <span itemprop="name">推荐一款命令行下支持语法高亮和Git集成的文件查看工具 bat</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-14T09:00:00+08:00" content="2018-05-14">
-          05-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/4358.html" itemprop="url">
-              
-                <span itemprop="name">Nginx 发布支持动态配置的开源 Web 服务器 Nginx Unit</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-11T09:00:00+08:00" content="2018-05-11">
-          05-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/36106.html" itemprop="url">
-              
-                <span itemprop="name">各大经典互联网公司技术架构分享「包含有腾讯、阿里、美团、百度、新浪、Google、Facebook、Amazon、eBay等知名公司」</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-09T09:00:00+08:00" content="2018-05-09">
-          05-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/61905.html" itemprop="url">
-              
-                <span itemprop="name">MySQL 用户和角色管理入门</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-08T09:00:00+08:00" content="2018-05-08">
-          05-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/60777.html" itemprop="url">
-              
-                <span itemprop="name">Docker 下部署 .NET 应用教程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-03T09:00:00+08:00" content="2018-05-03">
-          05-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/16159.html" itemprop="url">
-              
-                <span itemprop="name">Ubuntu 18.04 LTS (Bionic Beaver) 正式发布，一大波新特性到来!</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-04-27T09:00:00+08:00" content="2018-04-27">
-          04-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/34485.html" itemprop="url">
-              
-                <span itemprop="name">MySQL 8.0 正式版 8.0.11 发布！</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-04-20T09:01:00+08:00" content="2018-04-20">
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/41166.html" itemprop="url">
-              
-                <span itemprop="name">Service Mesh (服务网格) 入门</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-04-08T09:00:00+08:00" content="2018-04-08">
-          04-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/32089.html" itemprop="url">
-              
-                <span itemprop="name">Cloudflare 推出更快、更隐秘的 DNS 服务「1.1.1.1」</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-04-04T09:00:00+08:00" content="2018-04-04">
-          04-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/15306.html" itemprop="url">
-              
-                <span itemprop="name">蓝绿发布、滚动发布、灰度发布等部署方案对比与总结</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-04-03T09:00:00+08:00" content="2018-04-03">
-          04-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/6591.html" itemprop="url">
-              
-                <span itemprop="name">Nginx 宣布从 1.13.10 开始正式支持 gRPC</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-23T09:00:00+08:00" content="2018-03-23">
-          03-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/4769.html" itemprop="url">
-              
-                <span itemprop="name">推荐一款 MySQL 表结构自动同步工具——mysql-schema-sync</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-22T09:00:00+08:00" content="2018-03-22">
-          03-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://issue.lilidong.cn/Article">
-    <header class="post-header" style="opacity: 1; display: block; transform: translateY(0px);">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/posts/43578.html" itemprop="url">
-              
-                <span itemprop="name">给技术人员技术变现的九条建议</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-13T09:00:00+08:00" content="2018-03-13">
-          03-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-    </div>
-  </div>
-
-
- <footer-nav/>
+     <footer-nav/>
   </div>
 </template>
 <script>
+  import { Service } from '~/plugins/axios'
   export default{
        components: {
         FooterNav: () => import('~/components/Footer')
       },
+      data(){
+        return {
+               totalRecords: null,
+               archive:[]
+        }
+      },
+      //way1
+      // async asyncData() {
+      //   let {data} = await Service.get('article/archives')
+      //   return {
+      //     archive: data.data.list,
+      //     totalRecords:data.data.totalRecords
+      //   }
+      // },
+      // way2
+      // 这种方式必须 { params } 传这个就算没值
+      // 而且data 赋值不能是对象嵌套
+      asyncData ({ params }, callback) {
+        Service.get('article/archives')
+        .then((res) => {
+          //404
+          if(!res){
+            return error({
+              statusCode: 404,
+              message: "对不起，没有找到这个页面"
+            });
+          }
+          callback(null, { 
+           archive: res.data.data.list,
+           totalRecords: res.data.data.totalRecords
+           })
+        })
+        .catch((e) => {
+            return error({
+              statusCode: 500,
+              message: e.message
+            });
+        })
+      },
+      head () {
+        return {
+          title: "文章归档"
+        }
+      },
+       created () {
+        //test
+        //this.getArchives()
+      },
+     methods: {
+      getArchives() {
+         Service.get('article/archives')
+          .then(res => {
+            console.log(res.data.data)
+            const success = res.data && res.data.code === 200
+            if (success) {
+                 this.articleArchives.archive = res.data.data.list
+                 this.articleArchives.totalRecords = res.data.data.totalRecords 
+            }
+          },err => {
+             console.log(err)
+          })
+      }
+
+      }
   }
 </script>
 <style>
@@ -654,7 +211,7 @@
 }
 
 .posts-collapse .post-title {
-  margin-left: 60px;
+  margin-left: 125px;
   font-size: 24px;
   font-weight: normal;
   line-height: inherit;

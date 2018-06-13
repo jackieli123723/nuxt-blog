@@ -91,48 +91,14 @@
              </div>
 
 
-
-            <div class="posts-pagination">
-              <ul>
-                <li><a class="prev page-numbers" href="?page=2">Previous</a></li> 
-                <li>
-                  <span class="page-numbers current">
-                    1
-                  </span>
-                </li>
-                <li>
-                  <a class="page-numbers" href="?page=2">
-                    2
-                  </a>
-                </li>
-                <li>
-                  <a class="page-numbers" href="?page=3">
-                    3
-                  </a>
-                </li>
-                <li>
-                  <a class="page-numbers" href="?page=4">
-                    4
-                  </a>
-                </li>
-                <li>
-                  <span class="page-numbers dots">
-                    …
-                  </span>
-                </li>
-                <li>
-                  <a class="page-numbers" href="?page=11">
-                    11
-                  </a>
-                </li>
-                <li>
-                  <a class="next page-numbers" href="?page=2">
-                    Next
-                  </a>
-                </li>
-              </ul>
-            </div>
-
+         <!-- 分页组件  -->
+          <pagination-box 
+              @changePageButton="changePageButton" 
+              :currentPage="currentPage"
+              :totalPage="totalPage"
+              v-if="articleLists && articleLists.length > 0"
+          />
+          </pagination-box>
 
           </div>
         </div>
@@ -148,9 +114,18 @@
     articleLists:{
        type: Array,
        default: Array
-    }
+    },
+    totalPage:{
+       type: Number,
+       required: true
+    },
+    currentPage:{
+       type: Number,
+       required: true
+    },
   },
-  computed:{
+  components: {
+      PaginationBox: () => import('~/components/Pagination')
   },
   data(){
        return {
@@ -188,6 +163,9 @@
         ]
        }
     },
+    computed:{
+
+    },
     methods:{
       emitTitleChanged(e){
         this.$emit('inputChanged', this.title)
@@ -195,6 +173,10 @@
       emitTypeChanged(typeId){
         this.typeId = typeId
         this.$emit('typeChanged', typeId);
+      },
+      changePageButton(page){
+          // console.log('接收的页码',page)
+         this.$emit('changePageButton', page);
       }
     }
   }

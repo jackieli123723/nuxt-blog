@@ -22,7 +22,7 @@
   </div>
   <div class="container">
     <div id="content-area">
-      <div class="post-content" v-html="articleDetail.content"  v-highlight>
+      <div class="post-content" v-html="articleDetail.content"  >
         
       </div>
     </div>
@@ -30,26 +30,20 @@
    <comment-box />
    <footer-nav/>
 </div>
-<div id="content" class="container-fluid" v-else>
+<!-- <div id="content" class="container-fluid" v-else>
    404
+</div> -->
+<div class="error" v-else>
+  <img src="~assets/img/404.png" alt="错误页面" class="logo" />
+  <h1 class="title">
+   数据不存在
+  </h1>
+  <nuxt-link to="/">首页</nuxt-link>
 </div>
+
 </template>
 
 <script>
-import Vue from 'vue'
-import VueHighlightJS from 'vue-highlight.js'
-import 'highlight.js/styles/github.css'
-
-Vue.use(VueHighlightJS)
-
-  //html富文本 code高亮 
-  Vue.directive('highlight',function (el) {
-    let blocks = el.querySelectorAll('pre code');
-    blocks.forEach((block)=>{
-      hljs.highlightBlock(block)
-    })
-  })
-
 
   import { mapGetters } from 'vuex'
   import {seo} from '../../utils/utils'
@@ -83,8 +77,8 @@ Vue.use(VueHighlightJS)
       },
       created () {
           //这里调用没挂在window.__NUXT__
-          //不能调用这个否者的话会覆盖tab切换数据
-          this.GetArticleById()
+          //不能调用这个否者的话会覆盖tab切换数据 调用导致pv+2
+          //this.GetArticleById()
       },
       mounted(){
         //直接将SEO脚本放在页面会被当成文本解析，所以将方法提取出来，放到mounted hook里面执行
@@ -161,7 +155,33 @@ Vue.use(VueHighlightJS)
 </script>
 
 <style scoped>
-
+.ql-editor .ql-align-center img{
+    text-align: center;
+}
+.error {
+  text-align: center;
+  padding: 30px 0;
+}
+.title {
+  margin:0 auto;
+  margin-top: 15px;
+  font-size: 3em;
+  text-align: center;
+}
+.info {
+  font-weight: 300;
+  color: #9aabb1;
+  margin: 0;
+}
+a {
+  margin-top: 50px;
+  border: 1px solid #f00;
+  color: #f00;
+  font-size: 16px;
+  display: inline-block;
+  padding: 10px 30px;
+  border-radius: 4px;
+}
 
 @media (max-width: 639px) {
     .container-fluid>.container {

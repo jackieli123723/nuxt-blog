@@ -43,8 +43,7 @@ module.exports = {
       { src: '~assets/css/reset.css', lang: 'css'},
       { src: '~assets/css/new-style.css', lang: 'css'},
       { src: '~assets/css/style.css', lang: 'css'},
-      { src: '~assets/css/frontpage.css', lang: 'css'},
-      { src: '~assets/css/github.min.css', lang: 'css'}
+      { src: '~assets/css/frontpage.css', lang: 'css'}
   ],
   cache: {
         max: 1000,

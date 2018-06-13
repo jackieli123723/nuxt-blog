@@ -443,6 +443,7 @@ display:-webkit-box;
 }
 .posts-pagination li{
   display: inline-block;
+  cursor: pointer;
 }
 .page-numbers{
   display: inline-block;
