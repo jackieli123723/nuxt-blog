@@ -20,7 +20,7 @@
       let hour = date.getHours()
       let minute = date.getMinutes()
       function filter(num) {
-          return num > 10 ? num : '0' + num
+          return num >= 10 ? num : '0' + num
       }
       return filter(year)+'.'+filter(month)+'.'+filter(day)+' '+filter(hour)+':'+filter(minute);
   })

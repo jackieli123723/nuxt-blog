@@ -42,3 +42,20 @@ app.use(nuxt.render)
 // 监听指定端口
 app.listen(port, '0.0.0.0')
 console.log('服务器运行于 localhost:' + port)
+
+
+
+
+
+
+
+// deploy 
+//    -a
+//      -.nuxt
+//      -servera.js 
+//    -b
+//      -.nuxt
+//      -serverb.js
+//    -c 
+//       -.nuxt
+//      -serverb.js

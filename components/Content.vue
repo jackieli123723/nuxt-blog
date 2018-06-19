@@ -69,9 +69,34 @@
                          <span class="view-icon mes"></span>
                          <span class="num">{{article.pv}}</span> 
                       </div>
-                     
 
-                      <div class="post-rating">
+                      <div class="post-rating" v-if="article.stars && article.stars == 1">
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-empty">
+                        </div>
+                        <div class="post-rating-image star-empty">
+                        </div>
+                        <div class="post-rating-image star-empty">
+                        </div>
+                        <div  class="post-rating-image star-empty">
+                        </div>
+                      </div>
+                     
+                       <div class="post-rating" v-if="article.stars && article.stars == 2">
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-empty">
+                        </div>
+                        <div class="post-rating-image star-empty">
+                        </div>
+                        <div  class="post-rating-image star-empty">
+                        </div>
+                      </div>
+
+                      <div class="post-rating" v-if="article.stars && article.stars == 3">
                         <div class="post-rating-image star-full">
                         </div>
                         <div class="post-rating-image star-full">
@@ -83,6 +108,48 @@
                         <div  class="post-rating-image star-empty">
                         </div>
                       </div>
+                      
+
+                       <div class="post-rating" v-if="article.stars && article.stars == 4">
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div  class="post-rating-image star-empty">
+                        </div>
+                      </div>
+
+
+                       <div class="post-rating" v-if="article.stars && article.stars == 5">
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div  class="post-rating-image star-full">
+                        </div>
+                      </div>
+
+                      <div class="post-rating" v-if="article.stars == 0">
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div class="post-rating-image star-full">
+                        </div>
+                        <div  class="post-rating-image star-full">
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>

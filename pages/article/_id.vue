@@ -22,12 +22,91 @@
   </div>
   <div class="container">
     <div id="content-area">
+      <!-- 内容html -->
       <div class="post-content" v-html="articleDetail.content"  >
         
       </div>
+      <!--  评论 -->
+      <div class="comment-respond" id="respond">
+          <p class="comment-form-comment">
+            <label for="comment">
+              去留言
+            </label>
+            <textarea autocomplete="nope" id="comment"  cols="45"
+            rows="8" maxlength="65525" v-model="content">
+            </textarea>
+         
+          </p>
+          <p class="comment-form-author">
+            <label for="author">
+              姓名
+              <span class="required">
+                *
+              </span>
+            </label>
+            <input id="author" name="author" type="text" v-model="username" size="30" maxlength="245"
+            >
+          </p>
+          <p class="comment-form-email">
+            <label for="email">
+              邮箱
+              <span class="required">
+                *
+              </span>
+            </label>
+            <input id="email"  name="email" type="text" v-model="email" size="30" maxlength="100"
+             required="required">
+          </p>
+          <p class="comment-form-email">
+            <label for="email">
+              评分
+            </label>
+            <select class="rate-stars" v-model="stars">
+             <option>1</option>
+             <option>2</option>
+             <option>3</option>
+             <option>4</option>
+             <option>5</option>
+            </select>
+            
+          </p>
+          <p class="comment-form-url">
+            <label for="url">
+              网站
+            </label>
+            <input id="url" name="url" type="text" v-model="website" size="30" maxlength="200">
+            (添加http或https协议)
+          </p>
+          <p class="form-submit"  @click="postComment">
+           <span class="submit">提交评论</span>
+          </p>
+ 
+        </div>
+     <!-- 评论列表    -->
+    <comment-box 
+      :commentList="commentLists"
+      :totalRecords="totalRecords"
+      :page="page"
+     />
+    </comment-box>
+
+    <!-- 评论分页组件  -->
+    <pagination-box 
+        @changePageButton="changePageButton" 
+        :totalPage="totalPage"
+        :currentPage="currentPage"
+        v-if="commentLists && commentLists.length > 0"
+    />
+    </pagination-box>
+  
+
     </div>
   </div>
-   <comment-box />
+ 
+
+
+ 
+
    <footer-nav/>
 </div>
 <!-- <div id="content" class="container-fluid" v-else>
@@ -51,39 +130,61 @@
   export default {
       components: {
         FooterNav: () => import('~/components/Footer'),
-        CommentBox: () => import('~/components/Comment')
+        CommentBox: () => import('~/components/Comment'),
+        PaginationBox: () => import('~/components/Pagination')
       },
-      asyncData ({route,error},callback) {
-        let params = {
-            articleId:route.params.id 
-        }
-        Service.post('article/detail',params)
-        .then((res) => {
-          //404
-          if(!res){
-            return error({
-              statusCode: 404,
-              message: "对不起，没有找到这个页面"
-            });
+      //这个是单个请求
+      // asyncData ({route,error},callback) {
+      //   let params = {
+      //       articleId:route.params.id 
+      //   }
+      //   Service.post('article/detail',params)
+      //   .then((res) => {
+      //     //404
+      //     if(!res){
+      //       return error({
+      //         statusCode: 404,
+      //         message: "对不起，没有找到这个页面"
+      //       });
+      //     }
+      //     callback(null, { articleDetail: res.data.data })
+      //   })
+      //    .catch((e) => {
+      //       return error({
+      //         statusCode: 500,
+      //         message: e.message
+      //       });
+      //   })
+      // },
+      //这个是多个请求 对比上面的区别
+      async asyncData({ route, error }) {
+         let params = {
+          articleId:route.params.id 
+         }
+        let [articleContent, comments] = await Promise.all([
+             Service.post('article/detail',params),
+             Service.post('comment/front/list',params)
+          ]).catch(err => {
+              error({ statusCode: 400, message: err })
+          })
+          return {
+              articleDetail: articleContent.data.data,
+              commentLists: comments.data.data.list,
+              totalPage: comments.data.data.pages, //总共分几页 要和totalRecords一起判断分页显示
+              totalRecords:comments.data.data.totalRecords //留言总数
           }
-          callback(null, { articleDetail: res.data.data })
-        })
-         .catch((e) => {
-            return error({
-              statusCode: 500,
-              message: e.message
-            });
-        })
       },
       created () {
           //这里调用没挂在window.__NUXT__
           //不能调用这个否者的话会覆盖tab切换数据 调用导致pv+2
           //this.GetArticleById()
+          //this.GetArticleComments()
       },
       mounted(){
         //直接将SEO脚本放在页面会被当成文本解析，所以将方法提取出来，放到mounted hook里面执行
        // seo()
       },
+      watchQuery: ['page'],
       data(){
          return{
           articleDetail:{
@@ -93,8 +194,18 @@
               placeholder_img: null,
               background_img:null,
               content: null,
-              _id:''
-          }
+              _id:'',
+          },
+          commentLists:[],
+          username: '',
+          email: "",
+          website:"",
+          stars:5,
+          content:'',
+          page:1,
+          pageSize:10,
+          totalPage:'',
+          totalRecords:''
          }
       },
       head() {
@@ -115,7 +226,7 @@
           //计算meta描述语言关键 核心seo
           description() {
             return this.articleDetail.content
-              .substring(0, 150)
+              .substring(0, 300)
               
               //安全字符
               .replace(/&amp;/g, "&")
@@ -130,9 +241,17 @@
               .replace(/\r\n/g, "")
               .replace(/\n/g, "")
               .replace(/#+/g, ",") + "...";
+          },
+          currentPage(){
+            return this.page //当前页面监听否则在大于1页的分页的时候锚点错误
           }
       },
      methods: {
+      changePageButton(page){
+         this.page = page
+         this.GetArticleComments()
+         // console.log('接收的页码',page) 
+      },
       GetArticleById() {
         let params = {
           articleId:this.$route.params.id 
@@ -147,7 +266,97 @@
           }, err => {
              console.log(err)
           })
+      },
+      GetArticleComments() {
+        let params = {
+          page:this.page,
+          pageSize:this.pageSize,
+          articleId:this.$route.params.id 
+        }
+         Service.post('comment/front/list',params)
+          .then(res => {
+    
+            const success = res.data && res.data.code === 200
+            if (success) {
+              this.commentLists = res.data.data.list
+              this.totalRecords = res.data.data.totalRecords
+            }
+          }, err => {
+             console.log(err)
+          })
+      },
+     postComment(){
+        let self = this
+
+        if(!self.username || !self.email || !self.website || !self.content){
+          alert('评论内容格式有误')
+          return
+        }
+
+        const isEmail = (email) => {
+          const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/g;
+          return email.match(emailRegex) ? true : false;
+        }
+
+        const isURL = (string) => {
+            let protocolAndDomainRE = /^(?:\w+:)?\/\/(\S+)$/;
+            let localhostDomainRE = /^localhost[\:?\d]*(?:[^\:?\d]\S*)?$/
+            let nonLocalhostDomainRE = /^[^\s\.]+\.\S{2,}$/;
+            if (typeof string !== 'string') {
+                return false;
+            }
+
+            let match = string.match(protocolAndDomainRE);
+              if (!match) {
+                return false;
+            }
+
+            let everythingAfterProtocol = match[1];
+              if (!everythingAfterProtocol) {
+                return false;
+            }
+
+            if (localhostDomainRE.test(everythingAfterProtocol) ||
+                  nonLocalhostDomainRE.test(everythingAfterProtocol)) {
+              return true;
+            }
+           return false;
       }
+
+      if(!isEmail(self.email)){
+        alert('邮箱格式错误')
+        return
+      }
+      if(!isURL(self.website)){
+        alert('website格式错误')
+        return
+      }
+
+        let params = {
+          articleId:this.$route.params.id,
+          username: this.username,
+          email: this.email,
+          website:this.website,
+          stars:this.stars,
+          content:this.content.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        }
+         Service.post('comment/add',params)
+          .then(res => {
+            const success = res.data && res.data.code === 200
+            if (success) {
+               setTimeout(function(){
+                self.username = ''
+                self.email= ''
+                self.website=''
+                self.content=''
+                self.page = 1
+                self.GetArticleComments()
+               },300);
+            }
+          }, err => {
+             console.log(err)
+          })
+     } 
 
     }
 
@@ -155,6 +364,98 @@
 </script>
 
 <style scoped>
+
+
+.submit{
+    display: inline-block;
+    padding: 8px 20px;
+    border: none;
+    color: #fff;
+    background: #f00;
+    text-decoration: none;
+    text-shadow: none;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    bottom: 60px;
+    opacity: 1
+}
+.submit:hover{
+   -webkit-transition: all ease-out 200ms;
+    transition: all ease-out 200ms;
+    opacity:0.8;
+
+}
+#respond  {
+    clear: both;
+    padding-top: 30px;
+    max-width: 1290px;
+    position: relative; 
+    margin:10px auto;
+    padding-bottom: 65px;
+}
+
+#respond  label {
+    float: left;
+    padding-right: 10px;
+    width: 65px;
+    color: #BCCEDE;
+    text-align: right;
+}
+
+#respond  p {
+  
+    margin: 5px 0px;
+    line-height: 40px;
+}
+
+#respond p a{
+    outline: none;
+    color: #647993;
+    text-decoration: none;
+    font-weight: inherit;
+}
+#respond  p .required {
+    position: absolute;
+    left: 0;
+    color: #BCCEDE;
+}
+
+#respond  p.comment-notes {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+input[type="text"],input[type="email"]
+textarea {
+    padding: 8px 7px;
+    outline-color: #e2eaed;
+    border: 1px solid #d2dadd;
+    background: #F8F8F8;
+    color: #3a3a3a;
+    font-size: 13px;
+}
+
+#respond  input[type="text"],
+#respond  textarea {
+    display: inline-block
+}
+
+.ct-comment-form #respond  input[type="text"],
+.ct-comment-form #respond  textarea {
+    background: #fff
+}
+
+#respond  textarea {
+    display: block;
+    float: none;
+    clear: both;
+    width: 97%;
+}
+
 .ql-editor .ql-align-center img{
     text-align: center;
 }
@@ -166,7 +467,7 @@
   margin:0 auto;
   margin-top: 15px;
   font-size: 3em;
-  text-align: center;
+  text-align: left;
 }
 .info {
   font-weight: 300;

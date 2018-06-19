@@ -1,5 +1,5 @@
 <template>
-  <section id="comments" class="ct-comments">
+  <section id="comments" class="ct-comments" v-if="commentList && commentList.length > 0">
 
   <div class="ct-commenttitle ct-cf">
     <h2 id="comments-title">
@@ -7,306 +7,76 @@
         留言区
       </span>
       <sup>
-        138
+        {{totalRecords}}
       </sup>
     </h2>
-    <div class="ct-right">
-      <a class="ct-addcomment buttonbig action fright" href="#respond">
-        去留言
-      </a>
-    </div>
   </div>
 
   <ol class="ct-commentlist">
 <!-- 单个留言 -->
-    <li class="comment even thread-even depth-1" id="li-comment-475321">
-      <article id="comment-475321" class="ct-comment">
+    <li class="comment even thread-even depth-1" v-for="(comment,index) in commentList">
+      <article  class="ct-comment">
         <footer class="comment-meta">
           <div class="comment-author vcard">
             <span class="ct-commentthumb">
               <img alt="" src="https://secure.gravatar.com/avatar/bbe9674f35b1d481db7901e00854487b?s=60&amp;d=retro&amp;r=g"
-              srcset="https://secure.gravatar.com/avatar/bbe9674f35b1d481db7901e00854487b?s=120&amp;d=retro&amp;r=g 2x"
               class="avatar avatar-60 photo" height="60" width="60">
             </span>
             <span class="ct-commentauthorname">
-              Marco
+              {{comment.username}} --{{comment.stars}}
             </span>
-            <a href="https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/comment-page-6/#comment-475321"
+            <a 
             class="ct-commenttime">
-              <time pubdate="" datetime="2018-02-09T16:11:02+00:00">
-                February 9, 2018 at 16:11
-              </time>
+           {{comment.creat_date | formatDate}}
             </a>
           </div>
           <!-- .comment-author .vcard -->
         </footer>
         <div class="ct-commentnumber">
-          1
+     <!-- {{index+1}} 下面是给每个序号添加正确的 -->
+          {{ 10*(page-1) + index+1}}
         </div>
-        <div class="ct-commentcontent">
-          <p>
-            It seems that use a hand cursor in a button is not correct. :/ See:
-
-          </p>
-          <p>
-            <a href="https://medium.com/simple-human/buttons-shouldnt-have-a-hand-cursor-b11e99ca374b"
-            rel="nofollow">
-              https://medium.com/simple-human/buttons-shouldnt-have-a-hand-cursor-b11e99ca374b
-            </a>
-          </p>
-          <p>
-            I don’t know if it matters, but I only report it..
-          </p>
-        </div>
-        <div class="ct-commentreply">
-          <a rel="nofollow" class="comment-reply-link" href="https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/?replytocom=475321#respond"
-          onclick="return addComment.moveForm( &quot;comment-475321&quot;, &quot;475321&quot;, &quot;respond&quot;, &quot;24831&quot; )"
-          aria-label="Reply to Marco">
-            回复
-          </a>
-        </div>
-        <!-- .reply -->
-        <div class="ct-commentedit">
+        <div class="ct-commentcontent" v-html="comment.content">
         </div>
       </article>
-
-      <div id="respond" class="comment-respond">
-        <h3 id="reply-title" class="comment-reply-title">
-          回复留言to
-          <a href="#comment-475321">
-            Marco
-          </a>
-          <small>
-            <a rel="nofollow" id="cancel-comment-reply-link" href="/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/#respond">
-             取消回复
-            </a>
-          </small>
-        </h3>
-        <form action="https://tympanus.net/codrops/wp-comments-post.php" method="post"
-        id="commentform" class="comment-form">
-          <p class="comment-form-comment">
-            <label for="comment">
-              留言
-            </label>
-            <textarea autocomplete="nope" id="comment" name="e1264a0cbf" cols="45"
-            rows="8" maxlength="65525" aria-required="true" required="required">
-            </textarea>
-            <textarea id="79053e9091853b265bc3909bbbd0e429" aria-hidden="true" name="comment"
-            autocomplete="nope" style="clip:rect(1px, 1px, 1px, 1px);position:absolute !important;white-space:nowrap;height:1px;width:1px;overflow:hidden;"
-            tabindex="-1">
-            </textarea>
-          </p>
-          <p class="comment-form-author">
-            <label for="author">
-              姓名
-              <span class="required">
-                *
-              </span>
-            </label>
-            <input id="author" name="author" type="text" value="" size="30" maxlength="245"
-            aria-required="true" required="required">
-          </p>
-          <p class="comment-form-email">
-            <label for="email">
-              邮箱
-              <span class="required">
-                *
-              </span>
-            </label>
-            <input id="email" name="email" type="text" value="" size="30" maxlength="100"
-            aria-describedby="email-notes" aria-required="true" required="required">
-          </p>
-          <p class="comment-form-email">
-            <label for="email">
-              评分
-            </label>
-            <select class="rate-stars">
-             <option>1</option>
-             <option>2</option>
-             <option>3</option>
-             <option>4</option>
-             <option>5</option>
-            </select>
-            
-          </p>
-          <p class="comment-form-url">
-            <label for="url">
-              网站
-            </label>
-            <input id="url" name="url" type="text" value="" size="30" maxlength="200">
-          </p>
-          <p class="form-submit">
-            <input name="submit" type="submit" id="submit" class="submit" value="提交评论">
-            <input type="hidden" name="comment_post_ID" value="24831" id="comment_post_ID">
-            <input type="hidden" name="comment_parent" id="comment_parent" value="475690">
-          </p>
-        </form>
-      </div>
-
-      <!-- #comment-## -->
     </li>
-
-
-  <!--   多个复合留言 -->
-    <li class="comment even thread-even depth-1" id="li-comment-475417">
-          <article id="comment-475417" class="ct-comment">
-            <footer class="comment-meta">
-              <div class="comment-author vcard">
-                <span class="ct-commentthumb">
-                  <img alt="" src="https://secure.gravatar.com/avatar/668fda49064fc4978172ba64d4778daa?s=60&amp;d=retro&amp;r=g" srcset="https://secure.gravatar.com/avatar/668fda49064fc4978172ba64d4778daa?s=120&amp;d=retro&amp;r=g 2x" class="avatar avatar-60 photo" height="60" width="60">               </span>
-                <span class="ct-commentauthorname">OSITAKA</span> <a href="https://tympanus.net/codrops/2018/02/21/animated-fragment-slideshow/#comment-475417" class="ct-commenttime"><time pubdate="" datetime="2018-02-23T03:39:43+00:00">February 23, 2018 at 03:39</time></a>                
-              </div><!-- .comment-author .vcard -->
-            </footer>
-            <div class="ct-commentnumber">3</div>
-                        <div class="ct-commentcontent">
-                            <p>I love this effect! Very fresh and vivid! I am wondering if it’s possible to add a link on the  tag? Thank you!</p>
-            </div>
-
-            <div class="ct-commentreply">
-              <a rel="nofollow" class="comment-reply-link" href="https://tympanus.net/codrops/2018/02/21/animated-fragment-slideshow/?replytocom=475417#respond" onclick="return addComment.moveForm( &quot;comment-475417&quot;, &quot;475417&quot;, &quot;respond&quot;, &quot;33985&quot; )" aria-label="Reply to OSITAKA">Reply</a>           </div><!-- .reply -->
-            <div class="ct-commentedit">
-                        </div>
-            
-          </article><!-- #comment-## -->
-
-          <ul class="children">
-        <li class="comment odd alt depth-2" id="li-comment-475418">
-          <article id="comment-475418" class="ct-comment">
-            <footer class="comment-meta">
-              <div class="comment-author vcard">
-                <span class="ct-commentthumb">
-                  <img alt="" src="https://secure.gravatar.com/avatar/668fda49064fc4978172ba64d4778daa?s=60&amp;d=retro&amp;r=g" srcset="https://secure.gravatar.com/avatar/668fda49064fc4978172ba64d4778daa?s=120&amp;d=retro&amp;r=g 2x" class="avatar avatar-60 photo" height="60" width="60">               </span>
-                <span class="ct-commentauthorname">OSITAKA</span> <a href="https://tympanus.net/codrops/2018/02/21/animated-fragment-slideshow/#comment-475418" class="ct-commenttime"><time pubdate="" datetime="2018-02-23T03:40:32+00:00">February 23, 2018 at 03:40</time></a>                
-              </div><!-- .comment-author .vcard -->
-            </footer>
-            <div class="ct-commentnumber">4</div>
-                        <div class="ct-commentcontent">
-                            <p>I meant on the “h2” tag.</p>
-            </div>
-
-            <div class="ct-commentreply">
-                          </div><!-- .reply -->
-            <div class="ct-commentedit">
-                        </div>
-            
-          </article><!-- #comment-## -->
-
-          </li><!-- #comment-## -->
-        <li class="comment byuser comment-author-luis bypostauthor even depth-2" id="li-comment-475423">
-          <article id="comment-475423" class="ct-comment">
-            <footer class="comment-meta">
-              <div class="comment-author vcard">
-                <span class="ct-commentthumb">
-                  <img alt="" src="https://secure.gravatar.com/avatar/e832e7c26406f7212c825a5e7b5c17d4?s=60&amp;d=retro&amp;r=g" srcset="https://secure.gravatar.com/avatar/e832e7c26406f7212c825a5e7b5c17d4?s=120&amp;d=retro&amp;r=g 2x" class="avatar avatar-60 photo" height="60" width="60">               </span>
-                <span class="ct-commentauthorname">Luis Manuel</span> <a href="https://tympanus.net/codrops/2018/02/21/animated-fragment-slideshow/#comment-475423" class="ct-commenttime"><time pubdate="" datetime="2018-02-23T14:08:38+00:00">February 23, 2018 at 14:08</time></a>                
-              </div><!-- .comment-author .vcard -->
-            </footer>
-            <div class="ct-commentnumber">5</div>
-                        <div class="ct-commentcontent">
-                            <p>It is not possible to add a link as you normally would. What you could do is insert a link on top of the canvas element, but you would have to position it manually.</p>
-            </div>
-
-            <div class="ct-commentreply">
-                          </div><!-- .reply -->
-            <div class="ct-commentedit">
-                        </div>
-            
-          </article><!-- #comment-## -->
-
-          </li><!-- #comment-## -->
-        <li class="comment odd alt depth-2" id="li-comment-475435">
-          <article id="comment-475435" class="ct-comment">
-            <footer class="comment-meta">
-              <div class="comment-author vcard">
-                <span class="ct-commentthumb">
-                  <img alt="" src="https://secure.gravatar.com/avatar/668fda49064fc4978172ba64d4778daa?s=60&amp;d=retro&amp;r=g" srcset="https://secure.gravatar.com/avatar/668fda49064fc4978172ba64d4778daa?s=120&amp;d=retro&amp;r=g 2x" class="avatar avatar-60 photo" height="60" width="60">               </span>
-                <span class="ct-commentauthorname">OSITAKA</span> <a href="https://tympanus.net/codrops/2018/02/21/animated-fragment-slideshow/#comment-475435" class="ct-commenttime"><time pubdate="" datetime="2018-02-25T01:39:08+00:00">February 25, 2018 at 01:39</time></a>                
-              </div><!-- .comment-author .vcard -->
-            </footer>
-            <div class="ct-commentnumber">6</div>
-                        <div class="ct-commentcontent">
-                            <p>Luís, thank you for the answer! I guess I can do it with this little jQuery help: <a href="http://jsfiddle.net/S79qp/" rel="nofollow">http://jsfiddle.net/S79qp/</a></p>
-            </div>
-
-            <div class="ct-commentreply">
-                          </div><!-- .reply -->
-            <div class="ct-commentedit">
-                        </div>
-            
-          </article><!-- #comment-## -->
-
-          </li><!-- #comment-## -->
-</ul><!-- .children -->
-</li>
-    
+  
   </ol>
-
-  <div id="respond" class="comment-respond">
-        <form action="https://tympanus.net/codrops/wp-comments-post.php" method="post"
-        id="commentform" class="comment-form">
-          <p class="comment-form-comment">
-            <label for="comment">
-              留言
-            </label>
-            <textarea autocomplete="nope" id="comment" name="e1264a0cbf" cols="45"
-            rows="8" maxlength="65525" aria-required="true" required="required">
-            </textarea>
-            <textarea id="79053e9091853b265bc3909bbbd0e429" aria-hidden="true" name="comment"
-            autocomplete="nope" style="clip:rect(1px, 1px, 1px, 1px);position:absolute !important;white-space:nowrap;height:1px;width:1px;overflow:hidden;"
-            tabindex="-1">
-            </textarea>
-          </p>
-          <p class="comment-form-author">
-            <label for="author">
-              姓名
-              <span class="required">
-                *
-              </span>
-            </label>
-            <input id="author" name="author" type="text" value="" size="30" maxlength="245"
-            aria-required="true" required="required">
-          </p>
-          <p class="comment-form-email">
-            <label for="email">
-              邮箱
-              <span class="required">
-                *
-              </span>
-            </label>
-            <input id="email" name="email" type="text" value="" size="30" maxlength="100"
-            aria-describedby="email-notes" aria-required="true" required="required">
-          </p>
-          <p class="comment-form-email">
-            <label for="email">
-              评分
-            </label>
-            <select class="rate-stars">
-             <option>1</option>
-             <option>2</option>
-             <option>3</option>
-             <option>4</option>
-             <option>5</option>
-            </select>
-            
-          </p>
-          <p class="comment-form-url">
-            <label for="url">
-              网站
-            </label>
-            <input id="url" name="url" type="text" value="" size="30" maxlength="200">
-          </p>
-          <p class="form-submit">
-            <input name="submit" type="submit" id="submit" class="submit" value="提交评论">
-            <input type="hidden" name="comment_post_ID" value="24831" id="comment_post_ID">
-            <input type="hidden" name="comment_parent" id="comment_parent" value="475690">
-          </p>
-        </form>
-      </div>
-
-
+   
 
 </section>
 </template>
+
+<script>
+  export default {
+    props:{
+      commentList:{
+        type: Array,
+        required: true
+      },
+      totalRecords:{
+        type: Number,
+        required: true
+      },
+      page:{
+        type: Number,
+        required: true
+      }
+    },
+    components: {
+  
+    },
+    data(){
+      return {
+       
+      }
+    },
+     methods:{
+    
+    }
+  }
+</script>
+
 
 <style >
 .rate-stars{
@@ -343,44 +113,6 @@
     font-size: 22px
 }
 
-.buttonbig.action,
-input[type="submit"] {
-    background: #f00;
-    color: #fff;
-}
-
-.buttonbig.action:hover,
-input[type="submit"]:hover {
-    background: #f56c7e;
-    color: #fff;
-}
-
-.buttonbig.action:active,
-input[type="submit"]:active {
-    background: #f78297;
-    color: #fff;
-}
-
-.ct-right{
-  float: right;
-  margin-right: 4px;
-}
-.button,
-.ct-post p.ct-tags a,
-.buttonbig,
-input[type="submit"],
-.fm-form input[type="submit"] {
-    display: inline-block;
-    padding: 8px 20px;
-    border: none;
-    color: #fff;
-    text-decoration: none;
-    text-shadow: none;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 20px;
-    cursor: pointer;
-}
 
 .ct-comments {
     clear: both;
@@ -490,6 +222,14 @@ a.ct-commenttime {
 .ct-commentcontent {
     position: relative;
     padding: 20px 55px 30px 45px;
+    word-break:break-all;
+}
+
+.ct-commentcontent a {
+    outline: none;
+    color: #647993;
+    text-decoration: none;
+    font-weight: inherit;
 }
 
 .ct-commentcontent,
@@ -525,65 +265,6 @@ h3#reply-title {
 
 .ct-comment-form #respond {
     margin: 0 5px
-}
-
-#respond form {
-    position: relative;
-    clear: both;
-    padding-bottom: 65px;
-    width: 100%;
-}
-
-#respond form label {
-    float: left;
-    padding-right: 10px;
-    width: 65px;
-    color: #BCCEDE;
-    text-align: right;
-}
-
-#respond form p {
-    clear: both;
-    margin: 5px 0px;
-    line-height: 40px;
-}
-
-#respond form p .required {
-    position: absolute;
-    left: 0;
-    color: #BCCEDE;
-}
-
-#respond form p.comment-notes {
-    font-size: 12px;
-    line-height: 16px;
-}
-
-input[type="text"],
-textarea {
-    padding: 8px 7px;
-    outline-color: #e2eaed;
-    border: 1px solid #d2dadd;
-    background: #F8F8F8;
-    color: #3a3a3a;
-    font-size: 13px;
-}
-
-#respond form input[type="text"],
-#respond form textarea {
-    display: inline-block
-}
-
-.ct-comment-form #respond form input[type="text"],
-.ct-comment-form #respond form textarea {
-    background: #fff
-}
-
-#respond form textarea {
-    display: block;
-    float: none;
-    clear: both;
-    width: 97%;
 }
 
 h3#reply-title a {
