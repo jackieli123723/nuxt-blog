@@ -17,6 +17,7 @@
     "highlight.js": "^9.12.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
+    "moment": "^2.22.2",
     "nuxt": "^1.4.0",
     "qs": "^6.5.2",
     "vue-highlight.js": "^2.2.0"
