@@ -47,11 +47,11 @@ app.use(require('express').static(path.join(__dirname, 'static')));
 // let baseUrl = `http://${globalConfig.app.host}:${globalConfig.app.port}`
 
 let baseUrl = 'http://localhost:3001/'
-let rssApi = 'http://localhost:8080/article/archives'
-
+// let rssApi = 'http://localhost:8080/article/archives'
+let rssApi = 'http://118.24.30.92:8085/api/article/archives'
 const updateSiteMapScript = () => {
   const doUpdateSiteMap = () => {
-    axios.get('http://localhost:8080/article/archives', { timeout: 6000 }).then(res => {
+    axios.get(rssApi, { timeout: 6000 }).then(res => {
       if (res.status === 200) {
         // 10小时更新
         console.log('sitemap 脚本更新成功', new Date())
@@ -107,7 +107,7 @@ const create_sitemap = url_arr => {
   return xml_head + xml_body + xml_foot;
 }
 
-
+ 
 app.get('/rss.xml',function (req,res) {
    updateSiteMapScript()
 });
