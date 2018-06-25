@@ -50,7 +50,9 @@ module.exports = {
         maxAge: 900000
   },
   plugins: [
-    '~/plugins/axios.js'
+    '~/plugins/axios.js',
+    { src: '~/plugins/copy-right.js', ssr: false },
+    { src: '~/plugins/baidu-seo-push.js', ssr: false },
   ],
   build: {
     vendor: [
