@@ -36,7 +36,7 @@
      <!-- {{index+1}} 下面是给每个序号添加正确的 -->
           {{ 10*(page-1) + index+1}}
         </div>
-        <div class="ct-commentcontent" v-html="comment.content">
+        <div class="ct-commentcontent" v-html="getFace(comment.content)">
         </div>
       </article>
     </li>
@@ -72,7 +72,10 @@
       }
     },
      methods:{
-    
+      //https://github.com/sxei/isite/blob/master/src/res/blog/js/comment.js
+       getFace(content){
+        return content.replace(/\[qq_(\d+?)\]/g, `<img src="//res.haoji.me/blog/images/face/qq/qq_$1.gif"/>`)
+       }
     }
   }
 </script>
