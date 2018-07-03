@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: 
+Disallow:
 Sitemap: https://textnuxt.lilidong.cn/rss.xml
 

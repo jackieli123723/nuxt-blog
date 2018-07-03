@@ -23,7 +23,22 @@
               class="avatar avatar-60 photo" height="60" width="60">
             </span>
             <span class="ct-commentauthorname">
-              {{comment.username}} --{{comment.stars}}
+              {{comment.username}}
+            </span>
+            <span v-if="comment.stars == 1">
+              <span class="atar_Show atar_Show_1"></span>
+            </span>
+            <span v-if="comment.stars == 2">
+              <span class="atar_Show atar_Show_2"></span>
+            </span>
+            <span v-if="comment.stars == 3">
+             <span class="atar_Show atar_Show_3"></span>
+            </span>
+            <span v-if="comment.stars == 4">
+             <span class="atar_Show atar_Show_4"></span>
+            </span>
+            <span v-if="comment.stars == 5">
+              <span class="atar_Show atar_Show_5"></span>
             </span>
             <a 
             class="ct-commenttime">
@@ -74,7 +89,8 @@
      methods:{
       //https://github.com/sxei/isite/blob/master/src/res/blog/js/comment.js
        getFace(content){
-        return content.replace(/\[qq_(\d+?)\]/g, `<img src="//res.haoji.me/blog/images/face/qq/qq_$1.gif"/>`)
+        //return content.replace(/\[qq_(\d+?)\]/g, `<img src="//res.haoji.me/blog/images/face/qq/qq_$1.gif"/>`)
+        return content.replace(/\[qq_(\d+?)\]/g, `<img src="http://118.24.30.92:9000/static/img/face/qq/qq_$1.gif"/>`)
        }
     }
   }
@@ -82,6 +98,33 @@
 
 
 <style >
+
+.atar_Show {
+    background: url(~assets/img/stars2.png);
+    height: 21px;
+    width: 200px;
+    display: inline-block;
+    margin-left: 6px;
+    margin-top: 4px;
+
+}
+
+.atar_Show_5 {
+    width: 160px;
+}
+
+.atar_Show_4 {
+    width: 123px
+}
+.atar_Show_3 {
+    width: 100px
+}
+.atar_Show_2 {
+    width: 67px
+}
+.atar_Show_1 {
+    width: 35px
+}
 .rate-stars{
     width: 100px;
     height: 28px;

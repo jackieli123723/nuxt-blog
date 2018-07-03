@@ -26,6 +26,8 @@
       <div class="post-content" v-html="articleDetail.content"  >
         
       </div>
+      
+
       <!--  评论 -->
       <div class="comment-respond" id="respond">
           <p class="comment-form-comment">
@@ -33,10 +35,21 @@
               去留言
             </label>
             <textarea autocomplete="nope" id="comment"  cols="45"
-            rows="8" maxlength="65525" v-model="content">
+            rows="8" maxlength="65525" ref="textarea" v-model="content">
             </textarea>
-         
           </p>
+          <div class="face">
+            <div>
+               <span class="diy-face"  @click="openFaceChange">DIY表情</span>
+            </div>
+            <div class="xei-qq-face-wrapper" v-if="faceFlag">
+              <ul>
+                <li v-for="item in 105" @click="insertText(item)">
+                  <span data-idx="item"></span>
+                </li>
+              </ul>
+            </div>
+          </div>
           <p class="comment-form-author">
             <label for="author">
               姓名
@@ -205,7 +218,8 @@
           page:1,
           pageSize:10,
           totalPage:'',
-          totalRecords:''
+          totalRecords:'',
+          faceFlag:false
          }
       },
       head() {
@@ -247,6 +261,18 @@
           }
       },
      methods: {
+      // [qq_100][qq_101][qq_117][qq_115]
+      insertText(str) {
+            str = '[qq_'+parseInt(99+str)+']' + ``;
+            const oTextarea = this.$refs.textarea;
+            oTextarea.value += str;
+            this.content = oTextarea.value;
+            this.faceFlag = !this.faceFlag
+        },
+        openFaceChange(){
+       
+          this.faceFlag = !this.faceFlag
+        },
       changePageButton(page){
          this.page = page
          this.GetArticleComments()

@@ -109,7 +109,9 @@ const create_sitemap = url_arr => {
 
  
 app.get('/rss.xml',function (req,res) {
-   updateSiteMapScript()
+   //updateSiteMapScript()
+   //用fs模块读取rss.xml文件
+   res.send(fs.readFileSync(path.join(__dirname, '/static/rss.xml'), 'utf8'));
 });
 
 // 使用nuxt的render，渲染页面中间件
