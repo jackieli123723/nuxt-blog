@@ -45,4 +45,6 @@ if (process.env.NODE_ENV === 'production') {
       baiduPush(window.location.origin + to.fullPath)
     })
   })
+}else{
+  console.log('只有部署才可以爬')
 }
