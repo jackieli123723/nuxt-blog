@@ -1,10 +1,13 @@
 const { Nuxt, Builder } = require('nuxt')
 const app = require('express')()
+const bodyParser = require('body-parser')
 const port = process.env.PORT || 3001
 const moment = require('moment');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
+
+app.use(bodyParser.json()) // TypeError: Cannot read property 'call' of undefined 解决对请求体进行格式化
 
 // 传入配置初始化 Nuxt.js 实例
 let config = require('./nuxt.config.js') //引入nuxt配置
@@ -55,7 +58,7 @@ const updateSiteMapScript = () => {
       if (res.status === 200) {
         // 10小时更新
         console.log('sitemap 脚本更新成功', new Date())
-        console.log('文章数组',JSON.stringify(res.data.data.list,null,3))
+        console.log('文章数组',JSON.stringify(res.data.data.list.length,null,3))
         const url_list = [
           'http://localhost:3001/production', // 作品
           'http://localhost:3001/archives', // 归档
@@ -72,8 +75,8 @@ const updateSiteMapScript = () => {
         }
 
         const xml = create_sitemap(Array.prototype.concat.apply(url_list,article_list(res.data.data.list)));
-        fs.writeFileSync(path.join(__dirname, './static/rss.xml'), xml);
-        setTimeout(doUpdateSiteMap, 1000 * 60 * 60 * 10)
+        fs.writeFileSync(path.join(__dirname, './static/rss2.xml'), xml);
+        setTimeout(doUpdateSiteMap, 1000 * 60 * 1 * 10)
       } else {
         console.log('sitemap 脚本更新失败', new Date(), JSON.parse(res.data))
         setTimeout(doUpdateSiteMap, 1000 * 60 * 60 * 1)
@@ -108,11 +111,11 @@ const create_sitemap = url_arr => {
 }
 
  
-app.get('/rss.xml',function (req,res) {
-   //updateSiteMapScript()
-   //用fs模块读取rss.xml文件
-   res.send(fs.readFileSync(path.join(__dirname, '/static/rss.xml'), 'utf8'));
-});
+// app.get('/rss.xml',function (req,res) {
+//    //updateSiteMapScript()
+//    //用fs模块读取rss.xml文件
+//    res.send(fs.readFileSync(path.join(__dirname, '/static/rss.xml'), 'utf8'));
+// });
 
 // 使用nuxt的render，渲染页面中间件
 app.use(nuxt.render)

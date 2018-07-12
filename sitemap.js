@@ -29,17 +29,17 @@ const updateSiteMapScript = () => {
         console.log('文章',JSON.stringify(article_list(res.data.data.list),null,3))
 
         const xml = create_sitemap(Array.prototype.concat.apply(url_list,article_list(res.data.data.list)));
-        fs.writeFileSync(path.join(__dirname, './static/rss.xml'), xml);
-        setTimeout(doUpdateSiteMap, 1000 * 60 * 60 * 10)
+        fs.writeFileSync(path.join(__dirname, './static/sitemap.xml'), xml);
+        setTimeout(doUpdateSiteMap, 1000 )
       } else {
         console.log('sitemap 脚本更新失败', new Date(), JSON.parse(res.data))
-        setTimeout(doUpdateSiteMap, 1000 * 60 * 60 * 1)
+        setTimeout(doUpdateSiteMap, 1000 )
       }
       
     }).catch(error => {
       // 1小时更新
       console.log('sitemap脚本更新网络连接失败', new Date(), error)
-      setTimeout(doUpdateSiteMap, 1000 * 60 * 60 * 1)
+      setTimeout(doUpdateSiteMap, 1000)
     })
   }
   doUpdateSiteMap()
@@ -57,6 +57,7 @@ const create_sitemap = url_arr => {
       <url>
         <loc>${k}</loc>
         <lastmod>${moment().format('YYYY-MM-DDTHH:mm:ss+08:00')}</lastmod>
+        <priority>0.80</priority>
         <changefreq>daily</changefreq>
       </url>`;
     })
