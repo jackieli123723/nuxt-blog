@@ -34,7 +34,20 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'alternate', type: 'application/rss+xml', title: 'RSS 2.0', href: '/rss.xml' },
       { rel: 'author', type: 'text/plain', href: '/humans.txt' }
-    ]
+    ],
+    __dangerouslyDisableSanitizers: ['script'],
+    script: [{
+            innerHTML: `
+               var _hmt = _hmt || [];
+              (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?565377e3b26617c374503b81e05e790d";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+              })();
+            `,
+            type: 'text/javascript'
+        }]
   },
   loading: { color: '#3B8070' },
   //这里是放公用的css

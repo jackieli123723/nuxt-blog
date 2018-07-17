@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  //import {seo} from '~/utils/seo'
   import Vue from 'vue'
   //时间过滤器
   Vue.filter('formatDate',function (value) {
@@ -53,6 +54,10 @@
       HeaderArea: () => import('~/components/HeaderArea'),
       ContentBox: () => import('~/components/Content'),
       FooterNav: () => import('~/components/Footer'),
+    },
+     mounted(){
+      //直接将SEO脚本放在页面会被当成文本解析，所以将方法提取出来，放到mounted hook里面执行
+      //seo()
     }
   }
 </script>

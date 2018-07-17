@@ -41,7 +41,7 @@ const spiderBody = {
                 "per-page":10,
                 "detail":"/charactor/detail/{resource_code}"
             },
-             {
+            {
                 "type":"topMenu",
                 "menu_mark":"/"
             }
