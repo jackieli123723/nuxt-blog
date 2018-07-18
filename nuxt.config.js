@@ -25,7 +25,7 @@ module.exports = {
       { name: 'apple-mobile-web-app-capable', content: 'yes' },
       { name: 'apple-mobile-web-app-status-bar-style', content: '#263238' },
       { name: 'keywords', content: '西门互联nuxt博客,nuxt博客,西门互联前端博客,node全栈开发,F2E,node+nuxt开发自动化部署' },
-      { name: 'description', content: '西门互联前端学习,致力于web前端开发,全栈开发者' },
+      { name: 'description', content: '西门互联前端学习,致力于web前端开发,全栈开发者,西门互联nuxt博客,前端开发,nodejs全栈,WEB前端开发,前端开发博客专注于前端开发,分享前端开发资源和前端开发技术资讯等,个人原创网站,web前端技术分享,个人博客' },
       { name: 'author', content: '西门互联, jackieli,380863274@qq.com' },
       { name: 'country', content: 'China' },
       { name: 'revisit-after', content: '7 days' }

@@ -20,7 +20,7 @@
         <div class="mod-ft-sec mod-ft-copyright">
           <p>
             Powered by
-            <a href="http://issue.lilidong.cn" target="_blank">
+            <a href="/rss.xml" target="_blank">
               西门互联
             </a>
           </p>
@@ -30,10 +30,17 @@
           </p>
         </div>
       </div>
+     
+
     </footer>
+
+
+
+
 </template>
 
 <style scoped>
+
 .grid {
     width: 1190px;
     margin: auto

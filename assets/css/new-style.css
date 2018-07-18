@@ -171,9 +171,12 @@ header a{
   color: #000;
   line-height: 1.5;
 }
-.menu__primary__item a.menu__primary__item__link.active{
-  color: #ff0000;
+
+.menu__primary__item a.menu__primary__item__link.nuxt-link-exact-active{
+   color: #ff0000;
 }
+
+
 header .ui-menu{
   position: relative;
   top: auto;
@@ -285,7 +288,7 @@ header .ui-logo{
 }
 .ui-logo__icon svg{
   position: absolute;
-  top: 0;
+  top: 11px;
   left: 0;
   width: 100%;
   height: 100%;

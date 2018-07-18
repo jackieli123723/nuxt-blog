@@ -14,7 +14,7 @@
         前端工程师 
       </p>
        <p>
-        擅长：Node.js Javascript MySQL Mongodb Redis React Vue Angular Linux Centos
+        擅长：Node.js Javascript MySQL Mongodb Redis React Vue Angular Linux Centos React Native  小程序
       </p>
         <p class="ct-author-page-url">
         <strong>
