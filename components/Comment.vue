@@ -19,8 +19,7 @@
         <footer class="comment-meta">
           <div class="comment-author vcard">
             <span class="ct-commentthumb">
-              <img alt="" src="https://secure.gravatar.com/avatar/bbe9674f35b1d481db7901e00854487b?s=60&amp;d=retro&amp;r=g"
-              class="avatar avatar-60 photo" height="60" width="60">
+			  <img src="~assets/img/person.png" alt="西门互联nuxt博客评论头像" class="avatar avatar-60 photo" height="60" width="60" />
             </span>
             <span class="ct-commentauthorname">
               {{comment.username}}

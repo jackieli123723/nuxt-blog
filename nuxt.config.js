@@ -80,7 +80,16 @@ module.exports = {
                 maxAge: 1000 * 60 * 15
             })
         }
-  }
+  },
+  modules: [{ src: '@nuxtjs/pwa', options: { icon: { sizes: [512, 192, 380 ] } } }],
+  manifest: {
+    name: "西门互联",
+    description: '西门互联个人博客',
+    theme_color: '#42B983'
+    // lang: "zh-CN",
+    // mobileAppIOS: true,
+    // ogHost: "https://textnuxt.lilidong.cn/"
+  },
 };
 
 
