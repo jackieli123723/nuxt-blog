@@ -169,8 +169,26 @@
       //       });
       //   })
       // },
-      //这个是多个请求 对比上面的区别
-      async asyncData({ route, error }) {
+      //这个是多个请求 对比上面的区别 这里可以看到xhr why？ 
+    //   async asyncData({ route, error }) {
+    //      let params = {
+    //       articleId:route.params.id 
+    //      }
+    //     let [articleContent, comments] = await Promise.all([
+    //          Service.post('article/detail',params),
+    //          Service.post('comment/front/list',params)
+    //       ]).catch(err => {
+    //           error({ statusCode: 400, message: err })
+    //       })
+    //       return {
+    //           articleDetail: articleContent.data.data,
+    //           commentLists: comments.data.data.list,
+    //           totalPage: comments.data.data.pages, //总共分几页 要和totalRecords一起判断分页显示
+    //           totalRecords:comments.data.data.totalRecords //留言总数
+    //       }
+    //   },
+     // 第一次进入这里可以看到xhr why？ 刷新没有
+        async asyncData({ route, error },callback) {
          let params = {
           articleId:route.params.id 
          }
@@ -180,13 +198,13 @@
           ]).catch(err => {
               error({ statusCode: 400, message: err })
           })
-          return {
+		   callback(null, { 
               articleDetail: articleContent.data.data,
               commentLists: comments.data.data.list,
               totalPage: comments.data.data.pages, //总共分几页 要和totalRecords一起判断分页显示
               totalRecords:comments.data.data.totalRecords //留言总数
-          }
-      },
+           })
+      },   
       created () {
           //这里调用没挂在window.__NUXT__
           //不能调用这个否者的话会覆盖tab切换数据 调用导致pv+2
