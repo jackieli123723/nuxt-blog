@@ -7,19 +7,21 @@
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
+    "analyze": "nuxt build --analyze",
     "prestart": "npm run build",
-    "start": "PORT=3001 nuxt start",
+  "start": "PORT=3001 nuxt start",
     "generate": "nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/pwa": "^2.0.8",
     "axios": "^0.18.0",
+    "color-convert": "^1.9.3",
     "express": "^4.16.3",
     "highlight.js": "^9.12.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "moment": "^2.22.2",
-    "nuxt": "^1.4.0",
+    "nuxt": "^2.0.0",
     "qs": "^6.5.2",
     "request": "^2.87.0",
     "vue-highlight.js": "^2.2.0"
