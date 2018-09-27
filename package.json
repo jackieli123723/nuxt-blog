@@ -1,15 +1,18 @@
 {
   "name": "nuxt-blog",
-  "version": "0.0.1",
-  "description": "nuxt blog",
+  "version": "0.0.2",
+  "description": "nuxt2  blog",
   "author": "jackieli <380863274@qq.com>",
   "license": "LICENSE",
   "scripts": {
     "dev": "nuxt dev",
+    "dev-spa": "nuxt --spa",
     "build": "nuxt build",
+    "build-spa": "nuxt build --spa",
     "analyze": "nuxt build --analyze",
     "prestart": "npm run build",
-  "start": "PORT=3001 nuxt start",
+    "start": "nuxt start -p 3001 -H 0.0.0.0",
+    "start-spa": "nuxt start --spa -p 3001 -H 0.0.0.0",
     "generate": "nuxt generate"
   },
   "dependencies": {
