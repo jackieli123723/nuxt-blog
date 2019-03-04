@@ -5,7 +5,7 @@ import qs from 'qs'
 let service = axios.create({
   // baseURL: 'http://localhost:8080/api/', 
   baseURL: 'https://textnuxt.lilidong.cn/api/',
-  timeout: 5000,
+  timeout: 25000,
   transformRequest: function(data) {
         return qs.stringify(data)
     }

@@ -55,29 +55,33 @@
       // },
       // way2
       // 这种方式必须 { params } 传这个就算没值
-      // 而且data 赋值不能是对象嵌套
+      // 而且data 赋值不能是对象嵌套 callback 方式 推荐
       asyncData ({ params }, callback) {
         Service.get('article/archives')
         .then((res) => {
-          //404
-          if(!res){
-            return error({
-              statusCode: 404,
-              message: "对不起，没有找到这个页面"
-            });
-          }
           callback(null, { 
            archive: res.data.data.list,
            totalRecords: res.data.data.totalRecords
            })
         })
         .catch((e) => {
-            return error({
-              statusCode: 500,
-              message: e.message
-            });
+            callback({ statusCode: 404, message: '对不起，没有找到这个页面' })
         })
       },
+
+      //way3 error 方式
+      // asyncData ({ params, error }) {
+      //      Service.get('article/archives')
+      //           .then((res) => {
+      //               return { 
+      //                   archive: res.data.data.list,
+      //                   totalRecords: res.data.data.totalRecords
+      //                  }
+      //           })
+      //           .catch((e) => {
+      //               error({ statusCode: 404, message: '对不起，没有找到这个页面' })
+      //           })
+      // },
       head () {
         return {
           title: "文章归档"
