@@ -42,22 +42,40 @@ table {
   border-spacing: 0;
 }
 
-pre {
-  /*  padding: 16px;
-    overflow: auto;
-    font-size: 85%;
-    line-height: 1.45;
-    background-color: #f6f8fa;
-    border-radius: 3px;
-    word-wrap:break-word;*/
 
-    
-  margin:20px auto;
-  padding:20px;
-  background-color:#aea8a8;
-  white-space:pre-wrap;
-  word-wrap:break-word;
-  letter-spacing:0;
-  font:14px/26px ;
-  border-radius:3px;
-}
+
+
+/*代码格式 富文本编辑器 样式1 */
+.article-content{font-size:15px;line-height:25px;word-wrap:break-word;      word-break: break-all;}
+.article-content img{margin: 5px 0; display:block;max-width:100%;height:auto}
+.article-content h3, .article-content h4, .article-content h5{padding:0 0;margin:20px 0;color: #555;font-weight:bold;}
+.article-content h1, .article-content h2{font-weight:bold;    margin: 40px 0 20px;border-bottom: 1px solid #dddddd;padding-bottom: 20px;}
+.article-content h1{font-size:36px;}
+.article-content h2{font-size: 24px;}
+.article-content h3{font-size:20px; margin: 40px 0 20px;border-bottom: 1px dotted #dddddd;padding-bottom: 15px;}
+.article-content h4{font-size:16px; margin: 40px 0 15px;}
+.article-content h5{font-size:14px;}
+.article-content ul, .article-content ol{margin:0 0 20px 30px}
+.article-content ul{list-style: disc;}
+.article-content ol{list-style: decimal;}
+.article-content li{margin-bottom: 20px;}
+.article-content li ul{margin-top: 20px;}
+.article-content p{margin-bottom:20px;word-wrap:break-word;     word-break: break-all;}
+.article-content pre{word-wrap:break-word; }
+.article-content table{border-top:solid 1px #ddd;border-left:solid 1px #ddd;width:100%;margin-bottom:20px}
+.article-content table th{background-color:#f9f9f9;text-align:center}
+.article-content table td,.article-content table th{border-bottom:solid 1px #ddd;border-right:solid 1px #ddd;padding:5px 10px}
+.article-content .alignnone{}
+.article-content .alignleft{float:left;text-align:left;margin-right:10px}
+.article-content .aligncenter{margin: 0 auto;text-align: center;display: block;}
+.article-content .alignright{float:right;text-align:right;margin-left:10px}
+.article-content .wp-caption{margin-bottom: 20px;background-color: #f6f6f6;padding: 10px 10px 1px;max-width: 100%}
+.article-content .wp-caption img{margin: 0 0 5px;}
+.article-content .wp-caption p{margin-bottom: 10px;text-indent: 0;}
+.article-content .wp-caption.alignnone{text-align: center;}
+.article-content .wp-caption:hover .wp-caption-text{color: #45B6F7;}
+.article-content a{text-decoration:underline;color: #45B6F7;}
+.article-content a:hover{color: #FF5E52;}
+.article-content pre,.comment pre{margin:20px 0;font:12px/20px 'courier new';background:#272822;padding:10px 15px;color:#F8F8D4;border:none}
+.article-content blockquote{background:#fff;margin: 30px 0;padding: 15px 20px;font-size: 16px;color: #999;border-left: 5px solid #00a3cf;}
+.article-content blockquote p{margin:0;padding:0;margin-bottom: 10px;}

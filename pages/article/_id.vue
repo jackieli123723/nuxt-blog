@@ -1,31 +1,32 @@
 <template>
   <!-- 注意这里通过mongodb的_id来判断不存在的页面404 否则会报错 -->
   <div id="content" class="container-fluid" v-if="articleDetail && articleDetail._id !== ''">
-   <!--大图标题 -->
-  <div id="header-area" class="container-fluid with-subscribe" >
-    <div class="placeholder">
-      <!--  切换手机模式添加class="rotate" -->
-      <!-- <img :class="{'rotate':isMobile == true}" src="~assets/img/background-beverage-breakfast-414645-1920x1281.jpg"  >  -->
-      <img :class="{'rotate':isMobile == true}" :src=articleDetail.background_img  >
-    </div>
-   <div class="container">
-      <div class="description-area">
-      <div class="date">{{articleDetail.creat_date | formatDate}}</div>
-      <h1 class="title">{{articleDetail.title}}</h1>
-      <div class="tags">
-      <ul>
-        <li><a href="">{{articleDetail.type | formatType}}</a></li>
-      </ul>
+   
+   <div class="header-bg-box ">
+     <div class="description-area" :style="{backgroundImage:`url(${articleDetail.background_img})`}" style="    background-size: cover;" >
+        <div class="date">{{articleDetail.creat_date | formatDate}}</div>
+        <h1 class="title">{{articleDetail.title}}</h1>
+        <div class="tags">
+        <ul>
+          <li><a href="javascript:;">{{articleDetail.type | formatType}}</a></li>
+        </ul>
+        </div>
       </div>
-      </div>
-  </div>
-  </div>
+   </div>
   <div class="container">
     <div id="content-area">
-      <!-- 内容html -->
-      <div class="post-content" v-html="articleDetail.content"  >
-        
-      </div>
+      <!-- 内容html  没有code片段 可以这样用 -->
+     <!-- <div class="post-content" v-html="articleDetail.content"  >
+              
+      </div> -->
+     <!-- 内容html  这里需要分割 code代码片段和正常文本-->
+     
+      <article>
+          <div v-for="(item, index) in articleDetail.content" :key="index">
+              <highlight-code auto v-if="item.isCode" :code="item.cont.replace(/&nbsp\;/g, ' ')"></highlight-code>
+              <div class="article-content" v-else v-html="item.cont"></div>
+          </div>
+      </article>
       
 
       <!--  评论 -->
@@ -136,7 +137,39 @@
 </template>
 
 <script>
-
+  
+    // 拆分富文本文章内容中的文字和代码块（以适应前端代码高亮）
+    function dismantle(cont) {
+        let dismantleCont = [];
+        while (cont.length > 0) {
+            let flag = '<pre class="ql-syntax" spellcheck="false">';
+            if (cont.indexOf(flag) >= 0) {
+                if (cont.indexOf(flag) !== 0) {
+                    let codeOrigin = cont.indexOf(flag);
+                    dismantleCont.push({
+                        isCode: false,
+                        cont: cont.substring(0, codeOrigin)
+                    });
+                    cont = cont.substring(codeOrigin);
+                } else {
+                    let destination = cont.indexOf('</pre>');
+                    dismantleCont.push({
+                        isCode: true,
+                        cont: cont.substring(flag.length, destination).replace(/\&gt;/g, '>').replace(/\&lt;/g, '<')
+                    });
+                    cont = cont.substring(destination + 6);
+                }
+            } else {
+                dismantleCont.push({
+                    isCode: false,
+                    cont: cont
+                });
+                cont = '';
+            }
+        }
+        return dismantleCont;
+    }
+  
   import { mapGetters } from 'vuex'
   import {seo} from '../../utils/utils'
   import { Service } from '~/plugins/axios'
@@ -198,6 +231,9 @@
           ]).catch(err => {
               error({ statusCode: 400, message: err })
           })
+        
+ 
+        articleContent.data.data.content = dismantle(articleContent.data.data.content)
 		   callback(null, { 
               articleDetail: articleContent.data.data,
               commentLists: comments.data.data.list,
@@ -214,6 +250,7 @@
       mounted(){
         //直接将SEO脚本放在页面会被当成文本解析，所以将方法提取出来，放到mounted hook里面执行
        // seo()
+
       },
       watchQuery: ['page'],
       data(){
@@ -237,7 +274,7 @@
           pageSize:10,
           totalPage:'',
           totalRecords:'',
-          faceFlag:false
+          faceFlag:false,
          }
       },
       head() {
@@ -257,7 +294,7 @@
           },
           //计算meta描述语言关键 核心seo
           description() {
-            return this.articleDetail.content
+            return this.articleDetail.title
               .substring(0, 300)
               
               //安全字符
@@ -273,6 +310,8 @@
               .replace(/\r\n/g, "")
               .replace(/\n/g, "")
               .replace(/#+/g, ",") + "...";
+
+              // return 'test'
           },
           currentPage(){
             return this.page //当前页面监听否则在大于1页的分页的时候锚点错误
@@ -409,6 +448,26 @@
 
 <style scoped>
 
+.header-bg-box{
+  height: auto;
+  background: #fff;
+  width: 100%;
+  position: relative;
+  max-width:1390px;
+  margin:0 auto;
+  
+
+}
+
+  .description-area{
+    margin:0 auto;
+
+    color:#fff;
+    padding-left:8px;
+    height:300px;
+    padding-top:8px;
+
+  }
 
 .submit{
     display: inline-block;
@@ -519,7 +578,7 @@ textarea {
   margin: 0;
 }
 a {
-  margin-top: 50px;
+  margin-top: 25px;
   border: 1px solid #f00;
   color: #f00;
   font-size: 16px;
@@ -565,12 +624,7 @@ a {
     height: 100%
 }
 
-.description-area {
-    position: absolute;
-    left: 0;
-    bottom: 158px;
-    font-family: 'Roboto',sans-serif
-}
+
 
 .date {
     margin-bottom: 19px
@@ -608,7 +662,12 @@ a {
 
 #content-area {
     width: 1290px;
-    padding-left: 0px
+    padding-left: 0px;
+    background:#fff;
+    padding:50px;
+    border-radius:2px;
+    margin-left:-50px;
+    
 }
 
 .post-content {
@@ -863,21 +922,25 @@ a {
 }
 
 @media (max-width: 639px) {
-    .description-area {
-        left:15px
-    }
+ 
 
     #sidebar {
         width: 30px
     }
 
     #content-area {
-        padding-left: 30px
+        padding:10px;
+        margin-left:0;
+        margin-bottom:10px;
+    }
+    .title{
+      font-size: 27px;
     }
 
     .post-content blockquote {
         font-size: 20px;
-        padding: 0 5px
+        padding: 0 5px;
+
     }
 
     .post-subscribe {

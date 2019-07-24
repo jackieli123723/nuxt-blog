@@ -64,8 +64,9 @@ module.exports = {
   },
   plugins: [
     '~/plugins/axios.js',
-    { src: '~/plugins/copy-right.js', ssr: false },
+    { src: '~/plugins/copy-right.js', ssr: false },//false 客户端
     { src: '~/plugins/baidu-seo-push.js', ssr: false },
+    {src: '~/plugins/vue-highlight.js', ssr: true},
   ],
   build: {
     vendor: [
