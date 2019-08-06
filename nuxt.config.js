@@ -75,12 +75,13 @@ module.exports = {
     extractCSS: true,
   },
   render: {
-        bundleRenderer: {
-            cache: require('lru-cache')({
-                max: 1000,
-                maxAge: 1000 * 60 * 15
-            })
-        }
+        //nuxt ^2.7.1 注释   nuxt^2.0.0 开启
+        // bundleRenderer: {
+        //     cache: require('lru-cache')({
+        //         max: 1000,
+        //         maxAge: 1000 * 60 * 15
+        //     })
+        // }
   },
   modules: [{ src: '@nuxtjs/pwa', options: { icon: { sizes: [512, 192, 380 ] } } }],
   manifest: {
